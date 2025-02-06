@@ -1,17 +1,16 @@
 const { Client } = require("pg");
-const connectionStr = "postgresql://postgres:root@localhost:5432/schooldb";
+
 const client = new Client({
-  connectionString: connectionStr,
+  connectionString: "postgresql://postgres:root@localhost:5432/schooldb",
 });
 
-const connectDb = () => {
-  client.connect((err) => {
-    if (err) {
-      console.error("Connection failed:", err.message);
-    } else {
-      console.log("Connected to the PostgreSQL database.");
-    }
-  });
+const connectDb = async () => {
+  try {
+    await client.connect();
+    console.log("Connected to PostgreSQL database.");
+  } catch (error) {
+    console.error("Database connection failed:", error.message);
+  }
 };
 
-module.exports = connectDb;
+module.exports = { client, connectDb };
