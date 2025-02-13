@@ -1,4 +1,4 @@
-const { Client } = require("pg");
+const { Client, Pool } = require("pg");
 
 const client = new Client({
   connectionString: "postgresql://postgres:root@localhost:5432/schooldb",
@@ -13,4 +13,12 @@ const connectDb = async () => {
   }
 };
 
-module.exports = { client, connectDb };
+const pool = new Pool({
+  user: "postgres",
+  host: "localhost",
+  database: "schooldb",
+  password: "root",
+  port: 5432,
+});
+
+module.exports = { pool, client, connectDb };
